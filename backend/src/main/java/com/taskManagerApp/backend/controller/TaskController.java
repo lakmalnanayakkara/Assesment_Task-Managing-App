@@ -2,6 +2,7 @@ package com.taskManagerApp.backend.controller;
 
 import com.taskManagerApp.backend.dto.StandardResponse;
 import com.taskManagerApp.backend.dto.request.TaskRequestDTO;
+import com.taskManagerApp.backend.dto.response.TaskPaginatedResponseDTO;
 import com.taskManagerApp.backend.dto.response.TaskResponseDTO;
 import com.taskManagerApp.backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,18 @@ public class TaskController {
         TaskResponseDTO taskResponseDTO = taskService.getTaskById(taskId);
         ResponseEntity<StandardResponse> response = new ResponseEntity<>(
                 new StandardResponse(200,"SUCCESS",taskResponseDTO),
+                HttpStatus.OK
+        );
+        return response;
+    }
+
+    @GetMapping(path = "/get-all-tasks", params = {"id","page"})
+    public ResponseEntity<StandardResponse> getAllTasks(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "id") Long userId){
+        TaskPaginatedResponseDTO taskPaginatedResponseDTO = taskService.getAllTasks(userId,page);
+        ResponseEntity<StandardResponse> response = new ResponseEntity<>(
+                new StandardResponse(200,"SUCCESS",taskPaginatedResponseDTO),
                 HttpStatus.OK
         );
         return response;

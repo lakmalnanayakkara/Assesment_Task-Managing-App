@@ -1,6 +1,7 @@
 package com.taskManagerApp.backend.service.implementation;
 
 import com.taskManagerApp.backend.dto.request.TaskRequestDTO;
+import com.taskManagerApp.backend.dto.response.TaskPaginatedResponseDTO;
 import com.taskManagerApp.backend.dto.response.TaskResponseDTO;
 import com.taskManagerApp.backend.entity.Task;
 import com.taskManagerApp.backend.exception.AlreadyExistException;
@@ -9,7 +10,10 @@ import com.taskManagerApp.backend.repository.TaskRepository;
 import com.taskManagerApp.backend.service.TaskService;
 import com.taskManagerApp.backend.utils.mappers.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TaskServiceIMPL implements TaskService {
@@ -68,6 +72,19 @@ public class TaskServiceIMPL implements TaskService {
             return responseDTO;
         }else {
             throw new NotFoundException("Task not found.");
+        }
+    }
+
+    @Override
+    public TaskPaginatedResponseDTO getAllTasks(Long userId, int page) {
+        List<Task> tasks = taskRepository.getAllTasksByUserId(userId, PageRequest.of(page,5));
+        if (tasks.size() > 0) {
+            List<TaskResponseDTO> taskResponseDTOS = taskMapper.taskListToTaskResponseDTOList(tasks);
+            Long total = taskRepository.countAllTasksByUserId(userId);
+            TaskPaginatedResponseDTO taskPaginatedResponseDTO = new TaskPaginatedResponseDTO(taskResponseDTOS, total);
+            return taskPaginatedResponseDTO;
+        }else{
+            throw new NotFoundException("Tasks not found.");
         }
     }
 }
