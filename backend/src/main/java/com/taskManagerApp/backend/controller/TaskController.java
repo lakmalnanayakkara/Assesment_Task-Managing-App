@@ -56,7 +56,7 @@ public class TaskController {
         return response;
     }
 
-    @GetMapping(path = "/get-all-tasks", params = {"id","page"})
+    @GetMapping(path = "/get-tasks", params = {"id","page"})
     public ResponseEntity<StandardResponse> getAllTasks(
             @RequestParam(value = "page") int page,
             @RequestParam(value = "id") Long userId){

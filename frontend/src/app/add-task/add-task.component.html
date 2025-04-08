@@ -5,7 +5,7 @@
 </div>
 <app-message-box
   *ngIf="isError"
-  [message]="errMessage"
+  [message]="message"
   [isError]="isError"
   (isErrorEventEmit)="changeIsError($event)"
 ></app-message-box>
@@ -59,17 +59,17 @@
             >{{ statusType.viewValue }}</mat-option
           >
         </mat-autocomplete>
-        <mat-error *ngIf="signUpForm.controls.role.hasError('required')"
+        <mat-error *ngIf="addTaskForm.controls.status.hasError('required')"
           >Status is required</mat-error
         >
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="w-100 mt-2">
         <mat-label>Created At</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
-          formControlName="created"
           required
+          formControlName="created"
           [min]="startDate"
         />
         <mat-datepicker-toggle

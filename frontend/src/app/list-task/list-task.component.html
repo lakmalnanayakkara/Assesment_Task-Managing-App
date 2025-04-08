@@ -5,7 +5,77 @@
 </div>
 <app-message-box
   *ngIf="isError"
-  [message]="errMessage"
+  [message]="message"
   [isError]="isError"
   (isErrorEventEmit)="changeIsError($event)"
 ></app-message-box>
+<div class="container d-flex-1 flex-column flex-wrap align-items-center">
+  <div *ngIf="!isLoading && !isError">
+    <div class="m-3" *ngFor="let item of items">
+      <mat-card appearance="outlined" class="p-3">
+        <mat-card-title
+          ><strong>{{ item.title }}</strong></mat-card-title
+        >
+        <mat-card-content>
+          <p><strong>Status : </strong>{{ item.status }}</p>
+          <p><strong>Created At : </strong>{{ item.created }}</p>
+          <p><strong>Description : </strong>{{ item.description }}</p>
+        </mat-card-content>
+        <div
+          class="d-flex flex-row align-items-center justify-content-end mt-2"
+        >
+          <button class="btn btn-success m-2" (click)="deleteTask(item.taskId)">
+            Done
+          </button>
+          <button
+            mat-flat-button
+            class="me-2"
+            (click)="updateTask(item.taskId)"
+          >
+            Update
+          </button>
+          <button
+            class="btn btn-light d-flex align-items-center"
+            (click)="deleteTask(item.taskId)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+    <div
+      class="d-flex flex-row align-items-center justify-content-between mt-4 w-100"
+    >
+      <div style="min-width: 100px" class="text-start">
+        <button
+          class="btn btn-success"
+          *ngIf="page > 0; else prevPlaceholder"
+          (click)="prevPage()"
+        >
+          Previous
+        </button>
+        <ng-template #prevPlaceholder>
+          <span style="visibility: hidden">Previous</span>
+        </ng-template>
+      </div>
+      <div class="text-center flex-grow-1">
+        Page {{ page + 1 }} of {{ getTotalPages() }} pages.
+      </div>
+      <div style="min-width: 100px" class="text-end">
+        <button
+          class="btn btn-success"
+          *ngIf="
+            getTotalPages() > 1 && getTotalPages() !== page + 1;
+            else nextPlaceholder
+          "
+          (click)="nextPage()"
+        >
+          Next
+        </button>
+        <ng-template #nextPlaceholder>
+          <span style="visibility: hidden">Next</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,26 +11,49 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
+  private getAuthHeaders() {
+    const user = JSON.parse(localStorage.getItem('userInfo'));
+    return {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+  }
+
   addTask(taskAddDetails: TaskAddDetails): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add-task`, taskAddDetails);
+    return this.http.post(
+      `${this.apiUrl}/add-task`,
+      taskAddDetails,
+      this.getAuthHeaders()
+    );
   }
 
   updateTask(id: number, taskUpdateDetails: TaskAddDetails): Observable<any> {
-    return this.http.post(
-      `${this.apiUrl}/add-task?id=${id}`,
-      taskUpdateDetails
+    return this.http.put(
+      `${this.apiUrl}/update-task?id=${id}`,
+      taskUpdateDetails,
+      this.getAuthHeaders()
     );
   }
 
   deleteTask(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete-task?id=${id}`);
+    return this.http.delete(
+      `${this.apiUrl}/delete-task?id=${id}`,
+      this.getAuthHeaders()
+    );
   }
 
   getTaskById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/get-task-by-id?id=${id}`);
+    return this.http.get(
+      `${this.apiUrl}/get-task-by-id?id=${id}`,
+      this.getAuthHeaders()
+    );
   }
 
   getTasks(id: number, page: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/get-tasks?id=${id}&page=${page}`);
+    return this.http.get(
+      `${this.apiUrl}/get-tasks?id=${id}&page=${page}`,
+      this.getAuthHeaders()
+    );
   }
 }

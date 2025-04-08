@@ -20,8 +20,8 @@ public class CorsConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods(GET, POST, DELETE, PUT, OPTIONS)
-                        .allowedOriginPatterns("*")
                         .allowedHeaders("*")
+                        .allowedOrigins("http://localhost:4200")
                         .allowCredentials(true);
             }
         };

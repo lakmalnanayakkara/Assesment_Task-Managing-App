@@ -38,7 +38,7 @@ export class AddTaskComponent {
   statusTypes: { value: string; viewValue: string }[] = [
     { value: 'TO_DO', viewValue: 'To Do' },
     { value: 'DONE', viewValue: 'Done' },
-    { value: 'IN_PROGRESS', viewValue: 'To Do' },
+    { value: 'IN_PROGRESS', viewValue: 'In Progress' },
   ];
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class AddTaskComponent {
           this.addTaskForm.controls.title.setValue(data.data.title);
           this.addTaskForm.controls.status.setValue(data.data.status);
           this.addTaskForm.controls.created.setValue(
-            new Date(data.data.createdAt)
+            new Date(data.data.created)
           );
           this.addTaskForm.controls.description.setValue(data.data.description);
         },
