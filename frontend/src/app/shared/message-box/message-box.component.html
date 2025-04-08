@@ -1,0 +1,15 @@
+<div
+  [ngClass]="[
+    'd-flex',
+    'container',
+    'flex-row',
+    'align-items-center',
+    'justify-content-between',
+    'w-100',
+    isError ? 'alert alert-danger' : 'alert alert-success'
+  ]"
+  role="alert"
+>
+  {{ message }}
+  <i class="fa-solid fa-xmark close-btn" (click)="closeAlert()"></i>
+</div>

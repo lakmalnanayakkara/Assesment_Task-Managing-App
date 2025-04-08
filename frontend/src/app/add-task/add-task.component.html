@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<app-message-box
+  *ngIf="isError"
+  [message]="errMessage"
+  [isError]="isError"
+  (isErrorEventEmit)="changeIsError($event)"
+></app-message-box>
+<div class="container mt-md-5 d-flex flex-column align-items-center">
+  <div *ngIf="!isLoading">
+    <h1 class="mb-3 d-flex justify-content-center">Add Your Task</h1>
+    <form
+      [formGroup]="addTaskForm"
+      (ngSubmit)="onSubmit()"
+      class="flex-grow-1 w-100"
+    >
+      <mat-form-field class="w-100">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          placeholder="My Task 01"
+          formControlName="title"
+          type="text"
+          required
+        />
+        <mat-error *ngIf="addTaskForm.controls.title.hasError('required')"
+          >Title is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          placeholder="This is an example task."
+          formControlName="description"
+          type="text"
+          required
+        />
+        <mat-error *ngIf="addTaskForm.controls.description.hasError('required')"
+          >Description is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="w-100 mt-2">
+        <mat-label>Status</mat-label>
+        <input
+          type="text"
+          placeholder="Pick one"
+          matInput
+          formControlName="status"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let statusType of statusTypes"
+            [value]="statusType.value"
+            >{{ statusType.viewValue }}</mat-option
+          >
+        </mat-autocomplete>
+        <mat-error *ngIf="signUpForm.controls.role.hasError('required')"
+          >Status is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Created At</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="created"
+          required
+          [min]="startDate"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="addTaskForm.controls.created.hasError('required')"
+          >Date is required</mat-error
+        >
+      </mat-form-field>
+      <div class="d-flex align-items-center justify-content-start mt-2">
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="addTaskForm.invalid || addTaskForm.untouched"
+          *ngIf="!taskId"
+        >
+          Submit
+        </button>
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="addTaskForm.invalid || addTaskForm.untouched"
+          *ngIf="taskId"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
