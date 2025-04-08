@@ -101,4 +101,17 @@ export class ListTaskComponent {
     }
     console.log(this.page + 1 !== this.getTotalPages());
   }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'TO_DO':
+        return 'badge-todo';
+      case 'IN_PROGRESS':
+        return 'badge-inprogress';
+      case 'DONE':
+        return 'badge-done';
+      default:
+        return '';
+    }
+  }
 }

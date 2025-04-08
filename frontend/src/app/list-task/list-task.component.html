@@ -17,8 +17,17 @@
           ><strong>{{ item.title }}</strong></mat-card-title
         >
         <mat-card-content>
-          <p><strong>Status : </strong>{{ item.status }}</p>
-          <p><strong>Created At : </strong>{{ item.created }}</p>
+          <p>
+            <strong>Status : </strong>
+            <span
+              [ngClass]="getStatusClass(item.status)"
+              class="status-badge"
+              >{{ item.status }}</span
+            >
+          </p>
+          <p>
+            <strong>Created At : </strong>{{ item.created | date : "longDate" }}
+          </p>
           <p><strong>Description : </strong>{{ item.description }}</p>
         </mat-card-content>
         <div

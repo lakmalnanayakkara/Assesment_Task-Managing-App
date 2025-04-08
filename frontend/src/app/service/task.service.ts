@@ -7,7 +7,7 @@ import { TaskAddDetails } from '../shared/interface/task.interface';
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8080/api/v1/task';
+  private apiUrl = 'http://localhost:8081/api/v1/task';
 
   constructor(private http: HttpClient) {}
 
