@@ -28,7 +28,7 @@ public class Task {
     private String status;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created;
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)

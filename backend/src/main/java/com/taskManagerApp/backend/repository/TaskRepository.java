@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @EnableJpaRepositories
 public interface TaskRepository extends JpaRepository<Task, Long> {
+    Task findTaskByTitle(String title);
+
+    Task findTaskByTaskId(Long taskId);
 }
