@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center" *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<app-message-box
+  *ngIf="isError"
+  [message]="errMessage"
+  [isError]="isError"
+  (isErrorEventEmit)="changeIsError($event)"
+></app-message-box>
+<div
+  class="container d-flex flex-wrap flex-row w-100 align-items-center justify-content-center"
+>
+  <div class="d-flex flex-column col-md-6">
+    <h1 class="mb-3 d-flex justify-content-center">Sign In</h1>
+    <form
+      [formGroup]="signInForm"
+      (ngSubmit)="onSubmit()"
+      class="flex-grow-1 w-100"
+    >
+      <mat-form-field class="w-100">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Username"
+          formControlName="username"
+          type="text"
+          required
+        />
+        <mat-error *ngIf="signInForm.controls.username.hasError('required')"
+          >Username is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          formControlName="password"
+          type="password"
+          required
+        />
+        <mat-error *ngIf="signInForm.controls.password.hasError('required')"
+          >Password is required</mat-error
+        >
+      </mat-form-field>
+      <div class="d-flex flex-row align-items-center mt-2">
+        <button
+          mat-flat-button
+          class="me-2"
+          type="submit"
+          [disabled]="signInForm.invalid"
+        >
+          Sign In
+        </button>
+        New User ?<a routerLink="/sign-up" class="ms-2"> Create an Account</a>
+      </div>
+    </form>
+  </div>
+  <div class="d-flex col-md-6">
+    <img src="../../assets/signin.jpg" alt="image" class="w-100" />
+  </div>
+</div>
