@@ -5,7 +5,7 @@
 </div>
 <app-message-box
   *ngIf="isError"
-  [message]="errMessage"
+  [message]="message"
   [isError]="isError"
   (isErrorEventEmit)="changeIsError($event)"
 ></app-message-box>

@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { ListTaskComponent } from './list-task/list-task.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { ListTaskComponent } from './list-task/list-task.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [provideAnimationsAsync(), provideNativeDateAdapter()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -16,16 +16,25 @@ export class ListTaskComponent {
   isSuccess = false;
   items = [];
   id: number;
-  page: number = 1;
+  page: number = 0;
+  total: number;
 
   public subscriptions: Subscription = new Subscription();
 
   constructor(private taskService: TaskService, private router: Router) {}
 
   ngOnInit() {
-    this.id = JSON.parse(localStorage.getItem('userInfo')).userId;
     this.isLoading = true;
-    this.getTaskList();
+    const user = JSON.parse(localStorage.getItem('userInfo'));
+    console.log(user);
+
+    if (!user) {
+      this.router.navigate(['sign-in']);
+      this.isLoading = false;
+    } else {
+      this.id = user.userId;
+      this.getTaskList();
+    }
   }
 
   changeIsError(newIsError: boolean) {
@@ -36,7 +45,8 @@ export class ListTaskComponent {
     const getSub = this.taskService.getTasks(this.id, this.page).subscribe(
       (data) => {
         this.isLoading = false;
-        this.items = data.data;
+        this.items = data.data.tasks;
+        this.total = data.data.total;
       },
       (error) => {
         this.isLoading = false;
@@ -70,5 +80,38 @@ export class ListTaskComponent {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.total / 5);
+  }
+
+  prevPage() {
+    if (this.page > 0) {
+      this.page -= 1;
+      this.getTaskList();
+    }
+    console.log(this.page);
+  }
+
+  nextPage() {
+    if (this.getTotalPages() > this.page + 1) {
+      this.page += 1;
+      this.getTaskList();
+    }
+    console.log(this.page + 1 !== this.getTotalPages());
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'TO_DO':
+        return 'badge-todo';
+      case 'IN_PROGRESS':
+        return 'badge-inprogress';
+      case 'DONE':
+        return 'badge-done';
+      default:
+        return '';
+    }
   }
 }

@@ -15,7 +15,7 @@ import { UserService } from '../service/user.service';
 export class SignUpComponent {
   isLoading: boolean = false;
   isError: boolean = false;
-  errMessage: string;
+  message: string;
 
   signUpForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -43,12 +43,12 @@ export class SignUpComponent {
       (data) => {
         localStorage.setItem('userInfo', JSON.stringify(data.data));
         this.isLoading = false;
-        this.router.navigate(['task-list']);
+        this.router.navigate(['']);
       },
       (error) => {
         this.isLoading = false;
         this.isError = true;
-        this.errMessage = error.error.data;
+        this.message = error.error.data;
       }
     );
 

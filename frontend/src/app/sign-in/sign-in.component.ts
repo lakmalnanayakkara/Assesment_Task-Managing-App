@@ -15,7 +15,7 @@ import { UserSignInDetails } from '../shared/interface/user.interface';
 export class SignInComponent {
   isLoading: boolean = false;
   isError: boolean = false;
-  errMessage: string;
+  message: string;
 
   signInForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
@@ -37,12 +37,12 @@ export class SignInComponent {
       (data) => {
         localStorage.setItem('userInfo', JSON.stringify(data.data));
         this.isLoading = false;
-        this.router.navigate(['task-list']);
+        this.router.navigate(['']);
       },
       (error) => {
         this.isLoading = false;
         this.isError = true;
-        this.errMessage = error.error.data;
+        this.message = error.error.data;
       }
     );
 

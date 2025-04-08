@@ -1,0 +1,18 @@
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.badge-todo {
+  background-color: #f44336;
+}
+
+.badge-inprogress {
+  background-color: #ff9800;
+}
+
+.badge-done {
+  background-color: #4caf50;
+}
